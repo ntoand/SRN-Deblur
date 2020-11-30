@@ -1,4 +1,4 @@
-import os
+import os, sys
 import argparse
 import tensorflow as tf
 # import models.model_gray as model
@@ -19,8 +19,8 @@ def parse_args():
                         help='height for the tensorflow placeholder, should be multiples of 16')
     parser.add_argument('--width', type=int, default=1280,
                         help='width for the tensorflow placeholder, should be multiple of 16 for 3 scales')
-    parser.add_argument('--input_path', type=str, default='./testing_set',
-                        help='input path for testing images')
+    parser.add_argument('--input_path', type=str, default='',
+                        help='input path for a testing image')
     parser.add_argument('--output_path', type=str, default='./testing_res',
                         help='output path for testing images')
     args = parser.parse_args()
@@ -29,6 +29,8 @@ def parse_args():
 
 def main(_):
     args = parse_args()
+    if args.input_path == '':
+        raise Exception("You need to provide image to process")
 
     # set gpu/cpu mode
     if int(args.gpu_id) >= 0:
